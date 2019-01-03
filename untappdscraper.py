@@ -8,14 +8,16 @@ import json
 brouwerijlijst = ['hetuiltje', 'BrouwerijDeMolen']
 #TODO: json bierlijst
 
-#with open("bierlijst.json") as bierlijstfile:
-#    bierDict = json.load(bierlijst)
-
-def checkBierNieuw(bier, link):
-    print(bier, link)
-
 bierRegex = re.compile(r'(<a href=\"(\/b\/.*?)\">.*?)(.*?)</a>')
 bierDict = {}
+
+with open("bierlijst.json") as bierlijstfile:
+    bierDict = json.load(bierlijstfile)
+
+def checkBierNieuw(bier, link):
+    if bier not in bierDict.keys():
+        print('Nieuw bier gevonden!' + '\n' + bier + '\n' 'http://untappd.com'+ link + '\n')
+        bierDict.update({bier:link})
 
 def getBierlist(brouwerij):
     url = 'https://untappd.com/' + brouwerij + '/beer?sort=created_at_desc'
@@ -35,7 +37,7 @@ def getBierlist(brouwerij):
         #if i != None:
         gevonden = bierRegex.search(i)
         if gevonden:
-            print( 'Nieuw bier gevonden!' + '\n' + gevonden.group(3) + '\n' 'http://untappd.com'+ gevonden.group(2) + '\n')
+            #print( 'Nieuw bier gevonden!' + '\n' + gevonden.group(3) + '\n' 'http://untappd.com'+ gevonden.group(2) + '\n')
             #print(gevonden) 
             #bierDict.update({gevonden.group(3): gevonden.group(2)})
             checkBierNieuw(gevonden.group(3), gevonden.group(2))
