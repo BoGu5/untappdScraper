@@ -39,7 +39,7 @@ def getBierlist(brouwerij):
         
         
     #print(bierlist)    
-    #bierlist = 
+    #bierlist =wefwefwefwef 
     #print(bierlist.group)
 
 print('test')
