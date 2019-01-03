@@ -11,6 +11,9 @@ brouwerijlijst = ['hetuiltje', 'BrouwerijDeMolen']
 #with open("bierlijst.json") as bierlijstfile:
 #    bierDict = json.load(bierlijst)
 
+def checkBierNieuw(bier, link):
+    print(bier, link)
+
 bierRegex = re.compile(r'(<a href=\"(\/b\/.*?)\">.*?)(.*?)</a>')
 bierDict = {}
 
@@ -34,13 +37,8 @@ def getBierlist(brouwerij):
         if gevonden:
             print( 'Nieuw bier gevonden!' + '\n' + gevonden.group(3) + '\n' 'http://untappd.com'+ gevonden.group(2) + '\n')
             #print(gevonden) 
-            bierDict.update({gevonden.group(3): gevonden.group(2)})
-        #print(wef.group(1))
-        
-        
-    #print(bierlist)    
-    #bierlist =wefwefwefwef 
-    #print(bierlist.group)
+            #bierDict.update({gevonden.group(3): gevonden.group(2)})
+            checkBierNieuw(gevonden.group(3), gevonden.group(2))
 
 print('test')
 
