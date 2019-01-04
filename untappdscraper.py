@@ -11,8 +11,11 @@ brouwerijlijst = ['hetuiltje', 'BrouwerijDeMolen']
 bierRegex = re.compile(r'(<a href=\"(\/b\/.*?)\">.*?)(.*?)</a>')
 bierDict = {}
 
-with open("bierlijst.json") as bierlijstfile:
-    bierDict = json.load(bierlijstfile)
+try:
+    with open("bierlijst.json") as bierlijstfile:
+        bierDict = json.load(bierlijstfile)
+except OSError:
+    pass
 
 def checkBierNieuw(bier, link):
     if bier not in bierDict.keys():
