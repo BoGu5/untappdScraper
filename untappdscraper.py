@@ -3,13 +3,16 @@ import bs4
 import re 
 import requests
 import json
+import telegram_send
 
 
-brouwerijlijst = ['hetuiltje', 'BrouwerijDeMolen']
+brouwerijlijst = ['hetuiltje', 'BrouwerijDeMolen', 'BierbrouwerijEmelisse', 'BrouwerijKees', 'jopen']
 #TODO: json bierlijst
 
 bierRegex = re.compile(r'(<a href=\"(\/b\/.*?)\">.*?)(.*?)</a>')
 bierDict = {}
+bierList = []
+bierString = ""
 
 try:
     with open("bierlijst.json") as bierlijstfile:
@@ -19,7 +22,8 @@ except OSError:
 
 def checkBierNieuw(bier, link):
     if bier not in bierDict.keys():
-        print('Nieuw bier gevonden!' + '\n' + bier + '\n' 'http://untappd.com'+ link + '\n')
+        #print('Nieuw bier gevonden!' + '\n' + bier + '\n' 'http://untappd.com'+ link + '\n')
+        bierList.append('Nieuw bier gevonden!' + '\n' + bier + '\n' 'http://untappd.com'+ link + '\n') 
         bierDict.update({bier:link})
 
 def getBierlist(brouwerij):
@@ -45,12 +49,14 @@ def getBierlist(brouwerij):
             #bierDict.update({gevonden.group(3): gevonden.group(2)})
             checkBierNieuw(gevonden.group(3), gevonden.group(2))
 
-print('test')
+#print('test')
 
 for brouwerij in brouwerijlijst: 
     getBierlist(brouwerij)
-    
-print(bierDict)
+
+bierString = '\n'.join(bierList)
+print(bierString)    
+#print(bierDict)
 
 
 with open("bierlijst.json",'w') as bierlijstfile:
