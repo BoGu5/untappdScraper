@@ -5,6 +5,7 @@ import requests
 import json
 import telegram_send
 import html
+import time
 
 
 brouwerijlijst = ['hetuiltje', 'BrouwerijDeMolen', 'BierbrouwerijEmelisse', 'BrouwerijKees', 'jopen']
@@ -50,6 +51,7 @@ def getBierlist(brouwerij):
             #print(gevonden) 
             #bierDict.update({gevonden.group(3): gevonden.group(2)})
             checkBierNieuw(gevonden.group(3), gevonden.group(2))
+            time.sleep(60)
 
 
 for brouwerij in brouwerijlijst: 
