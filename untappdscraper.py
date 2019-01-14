@@ -6,12 +6,15 @@ import json
 import telegram_send
 import html
 
+
 brouwerijlijst = ['hetuiltje', 'BrouwerijDeMolen', 'BierbrouwerijEmelisse', 'BrouwerijKees', 'jopen']
 
 bierRegex = re.compile(r'(<a href=\"(\/b\/.*?)\">.*?)(.*?)</a>')
 bierDict = {}
 bierList = []
 bierString = ""
+
+#telegram_send.configure('~/.config/telegram-send.conf')
 
 try:
     with open("bierlijst.json") as bierlijstfile:
@@ -22,7 +25,7 @@ except OSError:
 def checkBierNieuw(bier, link):
     if bier not in bierDict.keys():
         #print('Nieuw bier gevonden!' + '\n' + bier + '\n' 'http://untappd.com'+ link + '\n')
-        bierList.append('*Nieuw bier gevonden!*' + '\n_' + bier + '_\n' 'http://untappd.com'+ link + '\n') 
+        bierList.append(html.unescape('*Nieuw bier gevonden!*' + '\n_' + bier + '_\n' 'http://untappd.com'+ link + '\n')) 
         bierDict.update({bier:link})
 
 def getBierlist(brouwerij):
@@ -52,8 +55,11 @@ def getBierlist(brouwerij):
 for brouwerij in brouwerijlijst: 
     getBierlist(brouwerij)
 
-bierString = '\n'.join(bierList)
-bierString = html.unescape(bierString   )
+#bierString = '\n'.join(bierList)
+#bierString = html.unescape(bierString)
+
+telegram_send.send(messages=bierList, parse_mode="markdown")
+
 print(bierString)    
 
 with open("bierlijst.json",'w') as bierlijstfile:
