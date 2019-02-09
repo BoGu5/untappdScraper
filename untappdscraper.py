@@ -52,9 +52,9 @@ def getBierlist(brouwerij):
             #bierDict.update({gevonden.group(3): gevonden.group(2)})
             checkBierNieuw(gevonden.group(3), gevonden.group(2))
 
-for brouwerij in brouwerijlijst: 
+for brouwerij in brouwerijlijst:
+    print(brouwerij) 
     getBierlist(brouwerij)
-    time.sleep(60)
 
 #bierString = '\n'.join(bierList)
 #bierString = html.unescape(bierString)
